@@ -24,5 +24,20 @@ namespace Элементы_компоновки.View.Pages
         {
             InitializeComponent();
         }
+
+        private void AddEmployeeBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditEmployeeBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RemoveEmployeeBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

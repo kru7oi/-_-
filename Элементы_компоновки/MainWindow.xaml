@@ -43,7 +43,8 @@
             <Button Name="ExitAppBtn" Grid.Row="6" Grid.Column="0" Content="Выход" FontSize="20" Click="ExitAppBtn_Click"/>
         </Grid>
 
-        <Frame Name="MainFrm" Grid.Column="2"/>
+        <!-- NavigationUIVisibility="Hidden" прячет панель навигации -->
+        <Frame Name="MainFrm" Grid.Column="2" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
     
