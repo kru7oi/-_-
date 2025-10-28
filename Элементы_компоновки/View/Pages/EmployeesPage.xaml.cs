@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Элементы_компоновки.Models;
 
 namespace Элементы_компоновки.View.Pages
 {
@@ -20,9 +21,12 @@ namespace Элементы_компоновки.View.Pages
     /// </summary>
     public partial class EmployeesPage : Page
     {
+        private EmployeeAppDbContext context = new();
         public EmployeesPage()
         {
             InitializeComponent();
+
+            EmployeesLv.ItemsSource = context.Employees.ToList();
         }
 
         private void AddEmployeeBtn_Click(object sender, RoutedEventArgs e)
@@ -38,6 +42,18 @@ namespace Элементы_компоновки.View.Pages
         private void RemoveEmployeeBtn_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void SearchByNameTb_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(SearchByNameTb.Text))
+            {
+                EmployeesLv.ItemsSource = context.Employees.ToList();
+            }
+            else
+            {
+                EmployeesLv.ItemsSource = context.Employees.Where(employee => employee.Fullname.Contains(SearchByNameTb.Text)).ToList();
+            }
         }
     }
 }

@@ -22,8 +22,11 @@ public partial class EmployeeAppDbContext : DbContext
     public virtual DbSet<Position> Positions { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=Win10\\SQLEXPRESS;Database=EmployeeAppDb;TrustServerCertificate=true;Trusted_Connection=true;");
+    {
+        optionsBuilder.UseSqlServer("Server=Win10\\SQLEXPRESS;Database=EmployeeAppDb;TrustServerCertificate=true;Trusted_Connection=true;");
+        optionsBuilder.UseLazyLoadingProxies();
+    }
+         
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

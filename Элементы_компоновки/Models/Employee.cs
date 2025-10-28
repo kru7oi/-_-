@@ -23,6 +23,19 @@ public partial class Employee
 
     public bool IsVacation { get; set; }
 
+    public string VacationText
+    {
+        get
+        {
+            if (IsVacation)
+            {
+                return "Да";
+            }
+
+            return "Нет";
+        }
+    }
+
     public string Gender { get; set; } = null!;
 
     public virtual Department Department { get; set; } = null!;

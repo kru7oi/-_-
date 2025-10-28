@@ -45,14 +45,25 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="Поиск по имени:"/>
-            <TextBox Name="SearchByNameTb" Grid.Column="2"/>
+            <TextBox Name="SearchByNameTb" Grid.Column="2" TextChanged="SearchByNameTb_TextChanged"/>
 
             <TextBlock Grid.Column="4" Text="Фильтр по должности:"/>
             <ComboBox Name="FilterByPosition" Grid.Column="6"/>
         </Grid>
 
         <ListView Name="EmployeesLv" Grid.Row="4">
-            
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Полное имя" DisplayMemberBinding="{Binding Fullname}"/>
+                    <GridViewColumn Header="Дата рождения" DisplayMemberBinding="{Binding DateOfBirth, StringFormat=d MMMM yyyy г., ConverterCulture=ru-RU}"/>
+                    <GridViewColumn Header="Отдел" DisplayMemberBinding="{Binding Department.Name}"/>
+                    <GridViewColumn Header="Должность" DisplayMemberBinding="{Binding Position.Name}"/>
+                    <GridViewColumn Header="Номер телефона" DisplayMemberBinding="{Binding Phone}"/>
+                    <GridViewColumn Header="Почта" DisplayMemberBinding="{Binding Email}"/>
+                    <GridViewColumn Header="Дата трудоустройства" DisplayMemberBinding="{Binding DateOfEmployment, StringFormat=d MMMM yyyy г., ConverterCulture=ru-RU}"/>
+                    <GridViewColumn Header="Отпуск" DisplayMemberBinding="{Binding VacationText}"/>
+                </GridView>
+            </ListView.View>
         </ListView>
     </Grid>
 </Page>
