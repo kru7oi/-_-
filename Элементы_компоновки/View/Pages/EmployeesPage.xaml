@@ -48,7 +48,7 @@
             <TextBox Name="SearchByNameTb" Grid.Column="2" TextChanged="SearchByNameTb_TextChanged"/>
 
             <TextBlock Grid.Column="4" Text="Фильтр по должности:"/>
-            <ComboBox Name="FilterByPosition" Grid.Column="6"/>
+            <ComboBox Name="FilterByPosition" DisplayMemberPath="Name" Grid.Column="6" SelectionChanged="FilterByPosition_SelectionChanged"/>
         </Grid>
 
         <ListView Name="EmployeesLv" Grid.Row="4">
