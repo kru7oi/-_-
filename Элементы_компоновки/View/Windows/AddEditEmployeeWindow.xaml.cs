@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,11 +28,47 @@ namespace Элементы_компоновки.View.Windows
             InitializeComponent();
 
             PositionCmb.ItemsSource = context.Positions.ToList();
+            DepartmentCmb.ItemsSource = context.Departments.ToList();
         }
 
         private void AddEmployeeBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(FullnameTb.Text) ||
+                string.IsNullOrEmpty(EmailTb.Text) ||
+                string.IsNullOrEmpty(PhoneTb.Text) ||
+                DateOfBirthDp.SelectedDate.Value == null ||
+                DateOfEmploymentDp.SelectedDate.Value == null ||
+                PositionCmb.SelectedItem == null ||
+                DepartmentCmb.SelectedItem == null ||
+                GenderCmb.SelectedItem == null)
+            {
+                // Всплывающее окно (использоуется для реализации сообщения для пользователя)
+                MessageBox.Show("Введены не все данные. Заполните все поля.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                // 1. Создаём "шаблон" для записи (создаём объёктом с типом Employee)
+                Employee newEmployee = new Employee();
 
+                // 2. Заполняем столбцы в записи (добавляем данные в объект newEmployee)
+                newEmployee.Fullname = FullnameTb.Text;
+                newEmployee.DateOfBirth = DateOnly.FromDateTime(DateOfBirthDp.SelectedDate.Value);
+                newEmployee.PositionId = Convert.ToInt32(PositionCmb.SelectedValue);
+                // Телефон
+                // Почта
+                // ИД отдела
+                // Дата трудоустройства
+                newEmployee.IsVacation = IsVacationCb.IsChecked.Value;
+                newEmployee.Gender = (GenderCmb.SelectedItem as TextBlock).Text;
+
+                // 3. Добавляем запись в таблицу 
+                context.Employees.Add(newEmployee);
+
+                // 4. Сохранить изменения
+                context.SaveChanges();
+
+                MessageBox.Show("Сотрудник успешно добавлен.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 }
