@@ -54,10 +54,10 @@ namespace Элементы_компоновки.View.Windows
                 newEmployee.Fullname = FullnameTb.Text;
                 newEmployee.DateOfBirth = DateOnly.FromDateTime(DateOfBirthDp.SelectedDate.Value);
                 newEmployee.PositionId = Convert.ToInt32(PositionCmb.SelectedValue);
-                // Телефон
-                // Почта
-                // ИД отдела
-                // Дата трудоустройства
+                newEmployee.Phone = PhoneTb.Text;
+                newEmployee.Email = EmailTb.Text;
+                newEmployee.DepartmentId = Convert.ToInt32(DepartmentCmb.SelectedValue);
+                newEmployee.DateOfEmployment = DateOnly.FromDateTime(DateOfEmploymentDp.SelectedDate.Value);
                 newEmployee.IsVacation = IsVacationCb.IsChecked.Value;
                 newEmployee.Gender = (GenderCmb.SelectedItem as TextBlock).Text;
 
@@ -67,7 +67,11 @@ namespace Элементы_компоновки.View.Windows
                 // 4. Сохранить изменения
                 context.SaveChanges();
 
+                // 5. Оповещаем пользователя
                 MessageBox.Show("Сотрудник успешно добавлен.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                // 6. Возвращаем результат работы окна
+                DialogResult = true; 
             }
         }
     }

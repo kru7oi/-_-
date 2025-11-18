@@ -40,8 +40,22 @@ namespace Элементы_компоновки.View.Pages
 
         private void AddEmployeeBtn_Click(object sender, RoutedEventArgs e)
         {
+            // Способы открытия окон:
+
+            // 1. Открытие фонового окна
+            // Метод Show() открывает фоновое окно, которое позволяет взаимодействовать пользователю с остальными открытыми окнами.
+
+            // AddEditEmployeeWindow addEditEmployeeWindow = new AddEditEmployeeWindow();
+            // addEditEmployeeWindow.Show();
+
+            // 2. Открытие диалогового (модального) окна
+            // Метод ShowDialog() открывает диалоговое окно, которое блокирует доступ ко всем ранее открытым окнам. Используется, когда нужно передать обратное какое-то решение после взаимодействия с окном. В качестве значения возвращается true или false.
+
             AddEditEmployeeWindow addEditEmployeeWindow = new AddEditEmployeeWindow();
-            addEditEmployeeWindow.Show();
+            if (addEditEmployeeWindow.ShowDialog() == true)
+            {
+                EmployeesLv.ItemsSource = context.Employees.ToList();
+            }
         }
 
         private void EditEmployeeBtn_Click(object sender, RoutedEventArgs e)
