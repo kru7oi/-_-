@@ -19,14 +19,13 @@ public partial class EmployeeAppDbContext : DbContext
 
     public virtual DbSet<Employee> Employees { get; set; }
 
+    public virtual DbSet<Gender> Genders { get; set; }
+
     public virtual DbSet<Position> Positions { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer("Server=Win10\\SQLEXPRESS;Database=EmployeeAppDb;TrustServerCertificate=true;Trusted_Connection=true;");
-        optionsBuilder.UseLazyLoadingProxies();
-    }
-         
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=EmployeeAppDb;Trusted_Connection=true;TrustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -43,10 +42,6 @@ public partial class EmployeeAppDbContext : DbContext
 
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.Fullname).HasMaxLength(100);
-            entity.Property(e => e.Gender)
-                .HasMaxLength(1)
-                .IsUnicode(false)
-                .IsFixedLength();
             entity.Property(e => e.Phone).HasMaxLength(11);
 
             entity.HasOne(d => d.Department).WithMany(p => p.Employees)
@@ -54,10 +49,22 @@ public partial class EmployeeAppDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Employee_Department");
 
+            entity.HasOne(d => d.Gender).WithMany(p => p.Employees)
+                .HasForeignKey(d => d.GenderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Employee_Gender");
+
             entity.HasOne(d => d.Position).WithMany(p => p.Employees)
                 .HasForeignKey(d => d.PositionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Employee_Position");
+        });
+
+        modelBuilder.Entity<Gender>(entity =>
+        {
+            entity.ToTable("Gender");
+
+            entity.Property(e => e.Name).HasMaxLength(30);
         });
 
         modelBuilder.Entity<Position>(entity =>

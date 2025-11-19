@@ -58,9 +58,7 @@
         <CheckBox Name="IsVacationCb" Grid.Row="14" Grid.Column="2" Content="В отпуске"/>
 
         <TextBlock Grid.Row="16" Text="Пол:"/>
-        <ComboBox Name="GenderCmb" Grid.Row="16" Grid.Column="2">
-            <TextBlock Text="Женский"/>
-            <TextBlock Text="Мужской"/>
+        <ComboBox Name="GenderCmb" Grid.Row="16" Grid.Column="2" DisplayMemberPath="Name" SelectedValuePath="Id">
         </ComboBox>
 
         <Button Name="AddEmployeeBtn" Grid.Row="18" Grid.Column="2" Content="Добавить" Click="AddEmployeeBtn_Click"/>

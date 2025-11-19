@@ -27,8 +27,15 @@ namespace Элементы_компоновки.View.Windows
         {
             InitializeComponent();
 
-            PositionCmb.ItemsSource = context.Positions.ToList();
-            DepartmentCmb.ItemsSource = context.Departments.ToList();
+            LoadData();
+
+        }
+
+        public AddEditEmployeeWindow(Employee selectedEmployee)
+        {
+            InitializeComponent();
+
+            LoadData();
         }
 
         private void AddEmployeeBtn_Click(object sender, RoutedEventArgs e)
@@ -59,10 +66,11 @@ namespace Элементы_компоновки.View.Windows
                 newEmployee.DepartmentId = Convert.ToInt32(DepartmentCmb.SelectedValue);
                 newEmployee.DateOfEmployment = DateOnly.FromDateTime(DateOfEmploymentDp.SelectedDate.Value);
                 newEmployee.IsVacation = IsVacationCb.IsChecked.Value;
-                newEmployee.Gender = (GenderCmb.SelectedItem as TextBlock).Text;
+                newEmployee.GenderId = Convert.ToInt32(GenderCmb.SelectedValue);
 
                 // 3. Добавляем запись в таблицу 
                 context.Employees.Add(newEmployee);
+                  
 
                 // 4. Сохранить изменения
                 context.SaveChanges();
@@ -73,6 +81,13 @@ namespace Элементы_компоновки.View.Windows
                 // 6. Возвращаем результат работы окна
                 DialogResult = true; 
             }
+        }
+
+        private void LoadData()
+        {
+            PositionCmb.ItemsSource = context.Positions.ToList();
+            DepartmentCmb.ItemsSource = context.Departments.ToList();
+            GenderCmb.ItemsSource = context.Genders.ToList();
         }
     }
 }

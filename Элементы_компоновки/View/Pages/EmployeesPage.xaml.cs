@@ -60,7 +60,13 @@ namespace Элементы_компоновки.View.Pages
 
         private void EditEmployeeBtn_Click(object sender, RoutedEventArgs e)
         {
+            Employee selectedEmployee = EmployeesLv.SelectedItem as Employee;
 
+            AddEditEmployeeWindow addEditEmployeeWindow = new AddEditEmployeeWindow();
+            if (addEditEmployeeWindow.ShowDialog() == true)
+            {
+                EmployeesLv.ItemsSource = context.Employees.ToList();
+            }
         }
 
         private void RemoveEmployeeBtn_Click(object sender, RoutedEventArgs e)

@@ -22,7 +22,6 @@ public partial class Employee
     public DateOnly DateOfEmployment { get; set; }
 
     public bool IsVacation { get; set; }
-
     public string VacationText
     {
         get
@@ -36,9 +35,11 @@ public partial class Employee
         }
     }
 
-    public string Gender { get; set; } = null!;
+    public int GenderId { get; set; }
 
     public virtual Department Department { get; set; } = null!;
+
+    public virtual Gender Gender { get; set; } = null!;
 
     public virtual Position Position { get; set; } = null!;
 }
