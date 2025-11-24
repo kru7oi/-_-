@@ -21,11 +21,13 @@ namespace Элементы_компоновки.View.Windows
     /// </summary>
     public partial class AddEditEmployeeWindow : Window
     {
-        private EmployeeAppDbContext context = new();
-
         public AddEditEmployeeWindow()
         {
             InitializeComponent();
+
+            Title = "Добавление сотрудника";
+            AddEmployeeBtn.Visibility = Visibility.Visible;
+            EditEmployeeBtn.Visibility = Visibility.Collapsed;
 
             LoadData();
 
@@ -35,7 +37,17 @@ namespace Элементы_компоновки.View.Windows
         {
             InitializeComponent();
 
+            DataContext = selectedEmployee;
+
+            Title = "Редактирование сотрудника";
+            AddEmployeeBtn.Visibility = Visibility.Collapsed;
+            EditEmployeeBtn.Visibility = Visibility.Visible;
+
             LoadData();
+
+            PositionCmb.SelectedItem = selectedEmployee.Position;
+            DepartmentCmb.SelectedItem = selectedEmployee.Department;
+            GenderCmb.SelectedItem = selectedEmployee.Gender;
         }
 
         private void AddEmployeeBtn_Click(object sender, RoutedEventArgs e)
@@ -69,11 +81,11 @@ namespace Элементы_компоновки.View.Windows
                 newEmployee.GenderId = Convert.ToInt32(GenderCmb.SelectedValue);
 
                 // 3. Добавляем запись в таблицу 
-                context.Employees.Add(newEmployee);
-                  
+                App.context.Employees.Add(newEmployee);
+
 
                 // 4. Сохранить изменения
-                context.SaveChanges();
+                App.context.SaveChanges();
 
                 // 5. Оповещаем пользователя
                 MessageBox.Show("Сотрудник успешно добавлен.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -85,9 +97,18 @@ namespace Элементы_компоновки.View.Windows
 
         private void LoadData()
         {
-            PositionCmb.ItemsSource = context.Positions.ToList();
-            DepartmentCmb.ItemsSource = context.Departments.ToList();
-            GenderCmb.ItemsSource = context.Genders.ToList();
+            PositionCmb.ItemsSource = App.context.Positions.ToList();
+            DepartmentCmb.ItemsSource = App.context.Departments.ToList();
+            GenderCmb.ItemsSource = App.context.Genders.ToList();
+        }
+
+        private void EditEmployeeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            App.context.SaveChanges();
+
+            MessageBox.Show("Данные успешно отредактированы.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            DialogResult = true;
         }
     }
 }

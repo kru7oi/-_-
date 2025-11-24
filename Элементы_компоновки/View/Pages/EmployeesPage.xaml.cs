@@ -23,19 +23,18 @@ namespace Элементы_компоновки.View.Pages
     /// </summary>
     public partial class EmployeesPage : Page
     {
-        private EmployeeAppDbContext context = new();
         private List<Position> positions = new();
         public EmployeesPage()
         {
             InitializeComponent();
 
-            positions = context.Positions.ToList();
+            positions = App.context.Positions.ToList();
 
             // Добавляем пункт "Все должности"
             positions.Insert(0, new Position() { Name = "Все должности" });
 
             FilterByPosition.ItemsSource = positions;
-            EmployeesLv.ItemsSource = context.Employees.ToList();
+            EmployeesLv.ItemsSource = App.context.Employees.ToList();
         }
 
         private void AddEmployeeBtn_Click(object sender, RoutedEventArgs e)
@@ -54,7 +53,7 @@ namespace Элементы_компоновки.View.Pages
             AddEditEmployeeWindow addEditEmployeeWindow = new AddEditEmployeeWindow();
             if (addEditEmployeeWindow.ShowDialog() == true)
             {
-                EmployeesLv.ItemsSource = context.Employees.ToList();
+                EmployeesLv.ItemsSource = App.context.Employees.ToList();
             }
         }
 
@@ -62,10 +61,10 @@ namespace Элементы_компоновки.View.Pages
         {
             Employee selectedEmployee = EmployeesLv.SelectedItem as Employee;
 
-            AddEditEmployeeWindow addEditEmployeeWindow = new AddEditEmployeeWindow();
+            AddEditEmployeeWindow addEditEmployeeWindow = new AddEditEmployeeWindow(selectedEmployee);
             if (addEditEmployeeWindow.ShowDialog() == true)
             {
-                EmployeesLv.ItemsSource = context.Employees.ToList();
+                EmployeesLv.ItemsSource = App.context.Employees.ToList();
             }
         }
 
@@ -78,11 +77,11 @@ namespace Элементы_компоновки.View.Pages
         {
             if (string.IsNullOrEmpty(SearchByNameTb.Text))
             {
-                EmployeesLv.ItemsSource = context.Employees.ToList();
+                EmployeesLv.ItemsSource = App.context.Employees.ToList();
             }
             else
             {
-                EmployeesLv.ItemsSource = context.Employees.Where(employee => employee.Fullname.Contains(SearchByNameTb.Text)).ToList();
+                EmployeesLv.ItemsSource = App.context.Employees.Where(employee => employee.Fullname.Contains(SearchByNameTb.Text)).ToList();
             }
         }
 
@@ -97,11 +96,11 @@ namespace Элементы_компоновки.View.Pages
 
             if (selectedPosition.Name == "Все должности")
             {
-                EmployeesLv.ItemsSource = context.Employees.ToList();
+                EmployeesLv.ItemsSource = App.context.Employees.ToList();
             }
             else
             {
-                EmployeesLv.ItemsSource = context.Employees.Where(employee => employee.PositionId == selectedPosition.Id).ToList();
+                EmployeesLv.ItemsSource = App.context.Employees.Where(employee => employee.PositionId == selectedPosition.Id).ToList();
             }
         }
     }
