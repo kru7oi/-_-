@@ -70,7 +70,20 @@ namespace Элементы_компоновки.View.Pages
 
         private void RemoveEmployeeBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (EmployeesLv.SelectedItem != null)
+            {
+                Employee selectedEmployee = EmployeesLv.SelectedItem as Employee;
 
+                MessageBoxResult result = MessageBox.Show("Вы действительно хотите удалить запись?", "Вопрос", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    App.context.Employees.Remove(selectedEmployee);
+                    App.context.SaveChanges();
+
+                    MessageBox.Show("Запись успешно удалена", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
         }
 
         private void SearchByNameTb_TextChanged(object sender, TextChangedEventArgs e)
